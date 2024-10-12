@@ -1,0 +1,1 @@
+/home/nat/.config/nvim/colors/cust.vim
