@@ -1,1 +1,122 @@
-/home/nat/.config/i3status/config
+general {
+        output_format = "i3bar"
+        colors = true
+	      color_good = "#7d7d7d"
+        interval = 1
+        markup = "pango"
+}
+
+order += "battery 0"
+order += "volume master"
+#order += "read_file deadbeef1"
+#order += "read_file deadbeef2"
+#order += "read_file deadbeef3"
+#order += "read_file deadbeef4"
+#order += "read_file weather"
+order += "memory"
+order += "cpu_usage"
+order += "disk '/'"
+order += "wireless wlan0"
+order += "tztime local"
+
+
+volume master {
+        format = "♪: %volume"
+        format_muted = "♪: muted (%volume)"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}
+
+wireless wlan0 {
+        #format_up = "W: (%quality at %essid, %bitrate) %ip"
+        format_up = "W: (%quality at %essid, %bitrate)"
+        format_down = "W: down"
+        format_quality = "%d%s"
+}
+
+cpu_usage {
+	format = "C: %usage"
+}
+
+
+memory {
+  format = "M: %used / %total"
+  threshold_degraded = "10%"
+  threshold_critical = "5%"
+}
+
+ethernet eth0 {
+        # if you use %speed, i3status requires the cap_net_admin capability
+        format_up = "E: %ip (%speed)"
+        format_down = "E: down"
+}
+
+battery 0 {
+        format = "%status <span color='#ffffff'>%percentage</span> %remaining"
+        format_down = "No battery"
+        status_chr = "CHR"
+        status_bat = "BAT"
+        status_unk = "UNK"
+        status_full = "FULL"
+        path = "/sys/class/power_supply/BAT1/uevent"
+        threshold_type = percentage
+	low_threshold = 10
+}
+
+read_file deadbeef1 {
+        format = "%content - "
+        path = "/home/nat/Downloads/stream_info/status_stream_1"
+        separator = false
+        separator_block_width = 0
+}
+read_file deadbeef2 {
+        format = "%content - "
+        path = "/home/nat/Downloads/stream_info/status_stream_2"
+        separator = false
+        separator_block_width = 0
+}
+read_file deadbeef3 {
+        format = "%content "
+        path = "/home/nat/Downloads/stream_info/status_stream_3"
+        separator = false
+        separator_block_width = 0
+}
+read_file deadbeef4 {
+        format = "(%content)"
+        path = "/home/nat/Downloads/stream_info/status_stream_4"
+}
+read_file weather {
+        format = "<span color='#ffffff'>%content</span>"
+        path = "/home/nat/.config/i3status/weather"
+}
+
+run_watch DHCP {
+        pidfile = "/var/run/dhclient*.pid"
+}
+
+run_watch VPNC {
+        # file containing the PID of a vpnc process
+        pidfile = "/var/run/vpnc/pid"
+}
+
+
+path_exists VPN {
+        # path exists when a VPN tunnel launched by nmcli/nm-applet is active
+        path = "/proc/sys/net/ipv4/conf/tun0"
+}
+
+tztime local {
+        format = "%Y-%m-%d <span color='#ffffff'>%H:%M:%S</span> "
+}
+
+
+load {
+        format = "LOAD: %5min"
+}
+
+cpu_temperature 0 {
+        format = "T: %degrees °C"
+        path = "/sys/devices/platform/coretemp.0/temp1_input"
+}
+
